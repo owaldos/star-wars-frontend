@@ -1,22 +1,49 @@
-import React, { useState, useEffect, useContext } from "react";
-import PropTypes from "prop-types";
+import React, { useContext } from "react";
+import PropTypes, { object } from "prop-types";
 import { Link, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
+import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 
 export const Single = props => {
 	const { store, actions } = useContext(Context);
-	const params = useParams();
+
 	return (
-		<div className="jumbotron">
-			<h1 className="display-4">This will show the demo element: {store.demo[params.theid].title}</h1>
-
-			<hr className="my-4" />
-
-			<Link to="/">
-				<span className="btn btn-primary btn-lg" href="#" role="button">
-					Back home
-				</span>
-			</Link>
+		<div className="container">
+			<div className="container">
+				<div className=" row">
+					<div className="col-6">
+						<img
+							src={store.description.img}
+							className="img-fluid rounded-start"
+							alt="..."
+							style={{ width: "80%" }}
+						/>
+					</div>
+					<div className=" row col-6 text-center">
+						<h2 className="mx-auto">
+							{store.description.data ? store.description.data.properties.name : null}
+						</h2>
+						<h4>{store.description.data ? store.description.data.description : null}</h4>
+						<p>
+							Star Wars, conocida también en español como La guerra de las galaxias, es una franquicia
+							compuesta primordialmente de una serie de películas concebidas por el cineasta
+							estadounidense George Lucas en la década de 1970
+						</p>
+					</div>
+				</div>
+				<div className="d-flex overflow-auto border-top border-danger mt-3">
+					{store.description.data
+						? Object.keys(store.description.data.properties).map((item, index) => {
+								return (
+									<div className="mx-3" key={index} style={{ color: "red" }}>
+										<h6>{item}</h6>
+										<p>{store.description.data.properties[item]}</p>
+									</div>
+								);
+						  })
+						: ""}
+				</div>
+			</div>
 		</div>
 	);
 };
